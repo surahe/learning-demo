@@ -1,0 +1,26 @@
+body {
+  background-image: url('./images/front.jpg');
+}
+
+.stage {
+  transform-style: preserve-3d;
+  position: absolute;
+  transform: translateZ(747px);
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.box {
+  transform-style: preserve-3d;
+}
+
+.box > div {
+  position: absolute;
+  width: 129px;
+  height: 1170px;
+  /* backface-visibility: hidden; */
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3D BOX</title>
+  <style>
+    .camera {
+      width: 200px;
+      height: 200px;
+      perspective-origin: center center;
+      perspective: 500px;
+    }
+
+    .space {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: 1px dashed #000;
+      transform-style: preserve-3d;
+      animation: s 4s linear infinite;
+    }
+
+    .space div {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      font-size: 50px;
+      text-align: center;
+      line-height: 100px;
+    }
+
+    .box1 {
+      background: rgba(255, 0, 0, .2);
+      transform: translateX(50px) translateY(50px);
+    }
+
+    .box2 {
+      background: rgba(255, 255, 0, .2);
+      transform-origin: left top;
+      transform: translateX(150px) translateY(50px) rotateY(90deg);
+    }
+
+    .box3 {
+      background: rgba(0, 255, 0, .2);
+      transform: translateX(50px) translateY(50px) translateZ(-100px) rotateY(180deg);
+    }
+
+    .box4 {
+      background: rgba(255, 0, 255, .2);
+      transform-origin: right top;
+      transform: translateX(-50px) translateY(50px) rotateY(-90deg);
+    }
+
+    .box5 {
+      background: rgba(0, 0, 255, .2);
+      transform-origin: center bottom;
+      transform: translateX(50px) translateY(-50px) rotateX(90deg);
+    }
+
+    .box6 {
+      background: rgba(0, 255, 255, .2);
+      transform-origin: center top;
+      transform: translateX(50px) translateY(150px) rotateX(-90deg);
+    }
+
+    @-webkit-keyframes s {
+      0% {
+        -webkit-transform: rotateY(0);
+      }
+
+      100% {
+        -webkit-transform: rotateY(-359.9deg);
+      }
+    }
+  </style>
+
+  <style type="text/css">
+    #box2 {
+      margin: 80px;
+      transform-style: preserve-3d;
+      transform-origin: 80px 80px 0;
+      animation: animation2 3s ease-in-out infinite;
+    }
+
+    #box2 div {
+      position: absolute;
+      height: 160px;
+      width: 160px;
+      border: 3px solid #000;
+      background: rgba(255, 200, 100, 0.8);
+      text-align: center;
+      font-size: 130px;
+    }
+
+    #box2 .one {
+      transform: translateZ(80px);
+    }
+
+    #box2 .two {
+      transform: rotateX(-90deg) translateZ(80px);
+    }
+
+    #box2 .three {
+      transform: rotateY(90deg) rotateX(90deg) translateZ(80px);
+    }
+
+    #box2 .four {
+      transform: rotateY(180deg) rotateZ(90deg) translateZ(80px);
+    }
+
+    #box2 .five {
+      transform: rotateY(-90deg) rotateZ(90deg) translateZ(80px);
+    }
+
+    #box2 .six {
+      transform: rotateY(90deg) translateZ(80px);
+    }
+
+    @-webkit-keyframes animation2 {
+      from,
+      to {}
+
+      16% {
+        transform: rotateY(-90deg);
+      }
+
+      33% {
+        transform: rotateY(-90deg) rotateZ(135deg);
+      }
+
+      50% {
+        transform: rotateY(225deg) rotateZ(135deg);
+      }
+
+      66% {
+        transform: rotateY(135deg) rotateX(135deg);
+      }
+
+      83% {
+        transform: rotateX(135deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>先通过translateX、translateY移动到合适的位置</li>
+    <li>再使用transform-origin和translateZ折叠</li>
+  </ul>
+  <div class="camera">
+    <div class="space">
+      <div class="box1">1</div>
+      <div class="box2">2</div>
+      <div class="box3">3</div>
+      <div class="box4">4</div>
+      <div class="box5">5</div>
+      <div class="box6">6</div>
+    </div>
+  </div>
+
+  <ul>
+    <li>先通过routateX、routateY将每个面旋转</li>
+    <li>再使用translateZ移动到相应的位置</li>
+  </ul>
+  <div id="view" style="width:160px; height:160px;">
+    <div id="box2">
+      <div class="one">A</div>
+      <div class="two">B</div>
+      <div class="three">C</div>
+      <div class="four">D</div>
+      <div class="five">E</div>
+      <div class="six">F</div>
+    </div>
+  </div>
+</body>
+
+</html>
