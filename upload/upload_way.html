@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    section {
+      margin-bottom: 50px;
+    }
+    .drag_area {
+      width: 80%;
+      height: 100px;
+      border: 1px dotted #000;
+    }
+
+    .paste_area {
+      width: 80%;
+      height: 200px;
+      border: 1px dotted #000;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>上传方式</h1>
+  <section>
+    <h2>input 上传</h2>
+    <input type="file">
+  </section>
+  <section>
+    <h2>Drag && drop</h2>
+    <span>文件：</span><span id="dragFile"></span>
+    <div class="drag_area" id="dragArea">
+      <p>将文件拖拽到这里</p>
+    </div>
+  </section>
+  <section>
+    <h2>paste</h2>
+    <div class="paste_area" id="pasteArea" contenteditable>
+      <img src="" alt="">
+    </div>
+  </section>
+  <script>
+    /*
+     *拖拽
+     */
+    var dragArea = document.getElementById('dragArea')
+    dragArea.addEventListener('dragover', function (event) {
+      event.preventDefault()
+    })
+    dragArea.addEventListener('drop', function (event) {
+      event.preventDefault()
+      var dragFile = document.getElementById('dragFile')
+      let file = event.dataTransfer.files[0]
+      if (file) {
+        console.log(file)
+        dragFile.innerText = file.name
+      }
+    })
+
+    /*
+     *粘贴
+     */
+    var pasteArea = document.getElementById('pasteArea')
+    pasteArea.addEventListener('paste', function (event) {
+      event.preventDefault()
+      let file = event.clipboardData.files[0]
+      if (file) {
+        console.log(file)
+        this.innerText = file.name
+      }
+    })
+  </script>
+</body>
+
+</html>

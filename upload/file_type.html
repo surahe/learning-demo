@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>文件类型</h1>
+  <section>
+    <h2>file</h2>
+    <p>通常情况下， File 对象是来自用户在一个 input 元素上选择文件后返回的 FileList 对象,也可以是来自由拖放操作生成的DataTransfer对象，继承于Blob</p>
+  </section>
+  <section>
+    <h2>blob</h2>
+    <p>一个 Blob对象表示一个不可变的, 原始数据的类似文件对象。Blob表示的数据不一定是一个JavaScript原生格式。 File 接口基于Blob，继承 blob功能并将其扩展为支持用户系统上的文件。</p>
+    <span>通过动态创建blob，实现纯前端</span><a id="download">下载</a>
+
+    <p>Blob URL可以通过URL.createObjectURL(blob)创建, 在每次调用createObjectURL()方法时，都会创建一个新的 URL 对象，即使你已经用相同的对象作为参数创建过。</p>
+    <p>在不需要这些URL对象的时候， 通过URL.revokeObjectURL(objectURL) 释放URL对象</p>
+    <input type="file" onchange=onUpload2(this.files[0])>
+    <div id="preview2"></div>
+  </section>
+  <section>
+    <h2>FileReader</h2>
+    <p>FileReader用来读取file或blob文件数据，基于文件大小不同，读取的过程为异步。</p>
+    <br>
+    <p>属性</p>
+    <dl>
+      <dt>FileReader.result</dt>
+      <dd>文件的内容。该属性仅在读取操作完成后才有效，数据的格式取决于使用哪个方法来启动读取操作。</dd>
+      <dt>FileReader.readAsDataURL()</dt>
+      <dd>会读取指定的 Blob 或 File 对象。读取操作完成的时候，readyState 会变成已完成DONE，并触发 loadend 事件，同时 result 属性将包含一个data:URL格式的字符串（base64编码）以表示所读取文件的内容。</dd>
+      <dt>FileReader.onloadend</dt>
+      <dd>处理loadend事件。该事件在读取操作结束时（要么成功，要么失败）触发。</dd>
+    </dl>
+    <br>
+    <p>FileReader读取文件方法</p>
+    <ul>
+      <li>readAsBinaryString(file)：将文件读取为二进制编码</li>
+      <li>readAsBinaryArray(file)：将文件读取为二进制数组</li>
+      <li>readAsText(blob[, encoding])：按照格式将文件读取为文本，encode默认为UTF-8</li>
+      <li>readAsDataURL(file)：将文件读取为DataUrl</li>
+    </ul>
+    
+    <input type="file" onchange=onUpload3(this.files[0])>
+    <div id="preview3"></div>
+  </section>
+  <script>
+    function blobDownload () {
+      const foo = { hello: "world" };
+      const blob = new Blob([JSON.stringify(foo)], { type: "text/plain" });
+      const fileName = `${Date.now()}.doc`;
+      const link = document.getElementById('download')
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      // link.click();
+      // URL.revokeObjectURL(link.href);
+    }
+
+    function onUpload2(file) {
+      var blob = new Blob([file]) // 文件转化成二进制文件
+      var url = URL.createObjectURL(blob);//转化成url
+      if (/image/g.test(file.type)) {
+        var img = document.createElement('img')
+        img.src = url
+        img.onload = function (e) {
+          console.log(this.src)
+          URL.revokeObjectURL(this.src);  // 释放createObjectURL创建的对象
+        }
+        document.getElementById('preview2').appendChild(img)
+      }
+      if (/video/g.test(file.type)) {
+        var video = document.createElement('video')
+        video.controls = true
+        video.src = url
+        document.getElementById('preview2').appendChild(video)
+        video.onload = function (e) {
+          URL.revokeObjectURL(this.src);  // 释放createObjectURL创建的对象
+        }
+      }
+    }
+
+    function onUpload3(file) {
+      var img = document.createElement('img')
+      var reader  = new FileReader()
+
+      reader.addEventListener("load", function () {
+        console.log(reader.result)
+        img.src = reader.result
+        document.getElementById('preview3').appendChild(img)
+      }, false);
+
+      if (file) {
+        reader.readAsDataURL(file)
+      }
+    }
+    blobDownload()
+  </script>
+</body>
+
+</html>
