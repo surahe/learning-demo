@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+</head>
+
+<body>
+  <img src="./tiger.png" style="display: none">
+  <table>
+    <tbody>
+      <tr>
+        <th>Rotate</th>
+        <td>
+          <h2>0deg</h2>
+          <canvas data-matrix="1,0,0,1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(1,0,0,1,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>90deg</h2>
+          <canvas data-matrix="0,1,-1,0,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(0,1,-1,0,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>180deg</h2>
+          <canvas data-matrix="-1,0,0,-1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(-1,0,0,-1,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>270deg</h2>
+          <canvas data-matrix="0,-1,1,0,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(0,-1,1,0,0,0)</code></pre>
+        </td>
+      </tr>
+      <tr>
+        <th>Flip</th>
+        <td>
+          <h2>None</h2>
+          <canvas data-matrix="1,0,0,1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(1,0,0,1,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>Vertical</h2>
+          <canvas data-matrix="1,0,0,-1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(1,0,0,-1,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>Horizontal</h2>
+          <canvas data-matrix="-1,0,0,1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(-1,0,0,1,0,0)</code></pre>
+        </td>
+        <td>
+          <h2>V &amp; H</h2>
+          <canvas data-matrix="-1,0,0,-1,0,0" width="200" height="200"></canvas>
+          <pre><code>matrix(-1,0,0,-1,0,0)</code></pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+		var img = document.querySelector("img")
+		document.addEventListener("dragover", function(evt){
+		    evt.preventDefault()
+		}, false)
+  
+		document.addEventListener("drop", function(evt){
+		    //file reader
+			var reader = new FileReader()
+			reader.onloadend = function(evt){
+				img.onload = readAll
+				img.src = reader.result
+			}
+			reader.readAsDataURL(evt.dataTransfer.files[0])
+		    evt.preventDefault()
+		}, false)
+
+		window.onload = readAll
+
+		function readAll(){
+			Array.prototype.forEach.call(
+				document.querySelectorAll("canvas"),
+				function(elem) {
+					var context = elem.getContext("2d")
+					var cx = elem.clientWidth / 2,
+						cy = elem.clientHeight / 2
+					var matrix = elem.dataset["matrix"]
+					if(!matrix) {
+						return
+					}
+
+					matrix = matrix.split(",").map(function(x){
+						return +x
+					})
+					context.save()
+					context.translate(cx, cy)
+					context.transform.apply(context, matrix)
+					// context.translate(-cx, -cy)
+					context.drawImage(img, 0, 0, img.width, img.height, 0, 0, cx*2, cy*2)
+					context.fillStyle = '#e74c3c'
+					context.fillRect(0,0,10,10)
+					context.restore()
+				}
+			)
+		}
+	</script>
+</body>
+
+</html>

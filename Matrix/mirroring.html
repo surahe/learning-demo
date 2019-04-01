@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>镜像</title>
+  <style>
+    .matrix_image {
+      margin-top: 30px;
+      position: relative;
+    }
+
+    .matrix_image img {
+      vertical-align: bottom;
+
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      -ms-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .matrix_line {
+      width: 150px;
+      height: 2px;
+      background-color: #000;
+      background-color: rgba(0, 0, 0, .6);
+      position: absolute;
+      left: 128px;
+      top: 95px;
+      z-index: 1;
+      -moz-transform-origin: top left;
+      -webkit-transform-origin: top left;
+      -o-transform-origin: top left;
+      transform-origin: top left;
+    }
+
+    .matrix_line:before {
+      content: " ";
+      width: 4px;
+      height: 4px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      background-color: #fff;
+      opacity: .75;
+      position: absolute;
+      left: -2px;
+      top: -2px;
+    }
+
+    .matrix_line:after {
+      content: " ";
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      border: 1px solid #000;
+      background-color: #34538b;
+      position: absolute;
+      right: -4px;
+      top: -4px;
+      cursor: move;
+    }
+
+    .matrix_input {
+      width: 160px;
+      position: absolute;
+      left: 270px;
+      top: 105px;
+    }
+  </style>
+</head>
+
+<body>
+  <p id="matrixDetail">目前属性值为：matrix(1,0,0,1,0,0)</p>
+  <div class="matrix_image">
+    <div id="matrixLine" class="matrix_line"></div>
+    <input type="text" id="matrixInput" class="matrix_input" autocomplete="off" placeholder="输入角度确定镜像对称轴" />
+    <img id="matrixImage" src="./dog.png" width="256" height="191" />
+  </div>
+  <script>
+    (function () {
+      var $ = function (selector) {
+        return document.querySelector && document.querySelector(selector);
+      };
+      var $css3Transform = function (element, value) {
+        var arrPriex = ["O", "Ms", "Moz", "Webkit", ""], length = arrPriex.length;
+        for (var i = 0; i < length; i += 1) {
+          element.style[arrPriex[i] + "Transform"] = value;
+        }
+      };
+
+      var eleDetail = $("#matrixDetail"), eleInput = $("#matrixInput"),
+        eleLine = $("#matrixLine"), eleImage = $("#matrixImage");
+
+      if (eleDetail && eleInput && eleImage) {
+        eleInput.addEventListener("blur", function () {
+          var value = parseInt(this.value, 10);
+          if (typeof value === "number") {
+            value = value % 360;
+            $css3Transform(eleLine, "rotate(" + value + "deg)");
+            // 确认对称线
+            var k = Math.tan(-1 * value * Math.PI / 180)
+              // ux = 1 / Math.sqrt(1 + k * k), uy = k / Math.sqrt(1 + k * k);
+
+            if (k > 1000000) {
+              ux = 0, uy = 1;
+            } else if (k < -1000000) {
+              ux = 0, uy = -1;
+            }
+            var valTransform = `matrix(${((1 - k * k)/(k * k + 1)).toFixed(6) }, ${(2 * k / (k*k+1)).toFixed(6)}, ${(2 * k / (k * k + 1)).toFixed(6)}, ${((k * k - 1) / (k * k + 1)).toFixed(6)}, 0 , 0)`
+            // var valTransform = "matrix(" + (2 * ux * ux - 1).toFixed(6) + "," + (2 * ux * uy).toFixed(6) + "," + (2 * ux * uy).toFixed(6) + "," + (2 * uy * uy - 1).toFixed(6) + ",0,0)";
+            eleDetail.innerHTML = '目前属性值为：' + valTransform;
+            $css3Transform(eleImage, valTransform);
+          } else {
+            this.value = "";
+          }
+        });
+      }
+    })();
+
+  </script>
+</body>
+
+</html>

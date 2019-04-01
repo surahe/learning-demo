@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      display: flex;
+      padding: 100px;
+    }
+
+    .test {
+      height: 400px;
+      width: 400px;
+      background: orange;
+      overflow: hidden;
+      transform: rotate(45deg);
+    }
+
+    .test > img {
+      transform: rotate(-45deg) scale(1.42);
+    }
+
+    .dog {
+      clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+      transition: clip-path 1s;
+    }
+    .dog:hover {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  </style>
+</head>
+<body>
+  <h2>使用rotate和scale</h2>
+  <div class="test">
+    <img src="./dog.png" alt="">
+  </div>
+
+  <h2>使用clip-path</h2>
+  <img class="dog" src="./dog.png" alt="" srcset="">
+</body>
+</html>
