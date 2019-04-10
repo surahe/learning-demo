@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+  <script>
+    // old undefined obj.find -> find0
+    // old find0     obj.find -> find1
+    // old find1     obj.find -> find2
+    function addMethod (obj, name, f) {
+      var old = obj[name]
+      obj[name] = function () {
+        // 形参 === 实参
+        console.log(old)
+        if (f.length === arguments.length) {
+          // this === obj
+          return f.apply(this, arguments)
+        }  else if ( typeof old == 'function' ) {
+          return old.apply(this, arguments)
+        }
+      }
+    }
+
+    var people = {
+      name: ['213', 'gaga', 'twrtq']
+    }
+    var find0 = function () {
+      return this.name
+    }
+    var find1 = function (name) {
+      var arr = this.name
+      for (var i =0; i < arr.length; i++) {
+        if (arr[i] === name) {
+          return arr[i] + '在' + i + '位置'
+        }
+      }
+    }
+    var find2 = function (name, age) {
+      console.log('test')
+    }
+
+    addMethod(people, 'find', find0)
+    addMethod(people, 'find', find1)
+    addMethod(people, 'find', find2)
+
+    // console.log(people.find('213'))
+    // console.log(people.find(1,1))
+    console.log(people.find())
+
+  </script>
+</body>
+</html>
