@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+  <title>debounce</title>
+  <style>
+    #container {
+      width: 100%;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      color: #fff;
+      background-color: #444;
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+  <button id="button">去掉debounce</button>
+  <script src="debounce.js"></script>
+  <script>
+    var count = 1
+    var container = document.getElementById('container')
+
+    // function getUserAction(event) {
+    //   console.log(this) // DOM
+    //   console.log(event)
+    //   container.innerHTML = count++
+    //   return false
+    // }
+
+    function getUserAction(...args) {
+      console.log(this) // window
+      console.log(args) // [mouseEvent, 1, 2]
+      container.innerHTML = count++
+      return false
+    }
+
+    var setUseAction = debounce(function (event) {
+      console.log(this) // DOM
+      getUserAction(event, 1, 2)
+      // 重新绑定this
+      // getUserAction.call(this, event, 1, 2)
+    }, 500, false)
+    container.onmousemove = setUseAction
+
+    document.getElementById("button").addEventListener('click', function () {
+      setUseAction.cancel()
+    })
+  </script>
+</body>
+
+</html>
