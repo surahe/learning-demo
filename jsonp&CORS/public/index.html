@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./jsonp.js"></script>
+  <script>
+    jsonp({
+      url: 'http://localhost:3000/json',
+      params: { wd: 'Iloveyou' },
+      callback: 'show'
+    }).then(data => {
+      console.log(data)
+    })
+  </script>
+
+  <!-- github json库 -->
+  <script src="./jsonp2.js"></script>
+  <!-- <script>
+    // a 返回cancel函数
+    var a = jsonp('http://localhost:3000/json', {
+      param : 'a=1&b=2&callback'
+    }, function(err, data) {
+      console.log(data)
+    })
+    // setTimeout(() => {
+    //   a() // 调用cancel函数后不会执行callback函数
+    // }, 1000);
+  </script> -->
+
+
+  <!-- CORS简单请求 -->
+  <script>
+    fetch('http://localhost:3000/say', {
+      method: 'GET'
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(`简单请求： ${data}`)
+      })
+  </script>
+
+  <!-- CORS复杂请求 -->
+  <script>
+    fetch('http://localhost:3000/say', {
+      method: 'PUT',
+      headers:{
+        "X-Custom-Header": "value"
+      }
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(`复杂请求： ${data}`)
+      })
+  </script>
+</body>
+
+</html>
