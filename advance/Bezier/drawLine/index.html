@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>贝塞尔曲线生成动画</title>
+  <style>
+    canvas {
+      width: 400px;
+      margin: 100px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="pointsCollection">
+    <span>point0:</span><input name="point[]" value="0, 0"><br>
+    <span>point1:</span><input name="point[]" value="50, 750"><br>
+  </div>
+
+  <p><button id="addPoint">add Point</button></p>
+
+  <p><button id="replay">replay</button></p>
+  <script src="./index.js"></script>
+</body>
+
+</html>
