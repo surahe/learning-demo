@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./selector.css">
+</head>
+
+<body>
+  <h2>基本选择器</h2>
+  <div class="container">
+    <p id="text">id选择器 <strong> #idname(ID 名)</strong></p>
+    <br>
+    <p class="text">类选择器 <strong>.classname(类名)</strong></p>
+    <br>
+    <p><em>元素选择器 <strong>elementname(元素名称)</strong></em></p>
+  </div>
+
+  <h2>组合选择器</h2>
+  <div class="container">
+    <span>后代选择器 <strong>A B</strong></span>
+  </div>
+
+  <div class="container">
+    <p>邻近元素选择器<strong>（A + B）</strong></p>
+    <ul>
+      <li>ul + p</li>
+      <li>ul + p</li>
+      <li>ul + p</li>
+    </ul>
+    <p>邻近元素选择器<strong>（A + B）</strong></p>
+    <p>邻近元素选择器<strong>（A + B）</strong></p>
+  </div>
+
+  <div class="container children-selector">
+    <ul>
+      <li> 直接子元素ul
+        <ul>
+          <li> .children-selector > ul </li>
+        </ul>
+      </li>
+      <li>子元素选择器<strong>（A > B）</strong> </li>
+      <li>子元素选择器<strong>（A > B）</strong> </li>
+      <li>子元素选择器<strong>（A > B）</strong> </li>
+    </ul>
+  </div>
+
+  <div class="container general-sibling">
+    <ul>
+      <li>兄弟选择器<strong>（A ~ B）</strong></li>
+      <li class="sibling">class="sibling" <strong>.sibling ~ li</strong></li>
+      <li>兄弟选择器<strong>（A ~ B）</strong></li>
+      <li>兄弟选择器<strong>（A ~ B）</strong></li>
+      <li>兄弟选择器<strong>（A ~ B）</strong></li>
+    </ul>
+  </div>
+
+  <h2>属性选择器</h2>
+  <div class="container">
+    <p><a title="haha">属性选择器<strong>[属性]</strong></a></p>
+    <p><a>属性选择器<strong>[属性=值]</strong></a></p>
+    <p><a>属性选择器<strong>[属性~=值]</strong></a></p>
+    <p><a>属性选择器<strong>[属性^=值]</strong></a></p>
+    <p><a>属性选择器<strong>[属性$=值]</strong></a></p>
+    <p><a>属性选择器<strong>[属性*=值]</strong></a></p>
+    <p><a>属性选择器<strong>[属性!=值]</strong></a></p>
+  </div>
+
+  <h2>伪元素选择器</h2>
+  <div class="container">
+    <div class="pseudo">
+      <div class="paragraph">123456789123456789123456789123456789123456789123456789</div>
+    </div>
+  </div>
+</body>
+
+</html>

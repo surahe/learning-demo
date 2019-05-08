@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .inherited .foo {
+      color: blue;
+    }
+
+    .inherited .bar {
+      color: green;
+    }
+
+    .inherited p {
+      color: red;
+    }
+
+    .inherited .bar p {
+      color: unset;
+    }
+
+    .non-inherited div {
+      border: 1px solid green;
+    }
+
+    .non-inherited p {
+      border: 1px solid red;
+    }
+
+    .non-inherited .bar p {
+      border-color: unset;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="inherited">
+    <p>This text is red.</p>
+    <div class="foo">
+      <p>This text is also red.</p>
+    </div>
+    <div class="bar">
+      <p>This text is green (default inherited value).</p>
+    </div>
+  </div>
+  <br>
+  <div class="non-inherited">
+    <p>This text has a red border</p>
+    <div>
+      <p>This text has a red border</p>
+    </div>
+    <div class="bar">
+      <p>This text has has a black border (initial default, not inherited)</p>
+    </div>
+  </div>
+</body>
+
+</html>

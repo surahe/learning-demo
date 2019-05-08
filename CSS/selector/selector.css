@@ -1,0 +1,73 @@
+/* 通配符 */
+* {
+  margin: 0;
+}
+
+/* id选择器 */
+#text {
+  color: red;
+}
+
+/* 类选择器 */
+.container{
+  border: 1px solid #000;
+  margin: 20px;
+  padding: 10px;
+}
+.text {
+  color: aquamarine;
+}
+
+/* 后代选择器 */
+.container span {
+  color: blue;
+}
+
+/* 元素选择器 */
+em {
+  color: green;
+}
+
+/* 临近元素选择器 */
+ul + p {
+  color: red;
+ }
+
+ /* 子元素选择器 */
+.children-selector > ul {
+  border: 1px solid red;
+}
+
+/* 兄弟选择器 */
+.sibling ~ li {
+  color: palegoldenrod;
+}
+
+/* 属性选择器 */
+a[title]{
+  color: purple;
+}
+
+/* 伪元素选择器 */
+.pseudo::before {
+  content: '::before';
+  color: gray;
+}
+
+.pseudo::after {
+  content: '::before';
+  color: blue;
+}
+
+.pseudo .paragraph {
+  width: 100px;
+  word-break: break-all;
+}
+
+.pseudo .paragraph::first-line {
+  color: red;
+}
+
+.pseudo .paragraph::first-letter {
+  color: green;
+}

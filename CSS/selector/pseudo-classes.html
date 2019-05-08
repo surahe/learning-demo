@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./pseudo-classes.css">
+</head>
+
+<body>
+  <h2>静态伪类(只应用于超链接)</h2>
+  <div class="container">
+    <a href="http://www.1111.com" class="link">:link - 未点击的链接</a><br><br>
+    <a href="" class="link">:visited - 已点击的链接</a>
+  </div>
+  <h2>动态伪类(可应用于任何元素)</h2>
+  <div class="container">
+    <span class="text">:hover - 悬浮</span>
+    <br><br>
+    <input type="text" class="input" value=":focus - 获取焦点">
+    <br><br>
+    <button class="button">:active - 点击未松开</button>
+  </div>
+  <h2>目标伪类</h2>
+  <div class="container target">
+    <div>
+      <p><a href="#news1">:target - 目标</a></p>
+      <p><a href="#news2">Jump to New content 2</a></p>
+    </div>
+    <ul>
+      <li id="news1" class="page"><b>New content 1...</b></li>
+      <li id="news2" class="page"><b>New content 2...</b></li>
+    </ul>
+  </div>
+  <h2>元素状态伪类</h2>
+  <div class="container">
+    <div>
+      <input type="radio" name="check" id="a" class="checked" value="">
+      <label for="a">:checked - radio、checkbox选中</label>
+      <input type="radio" name="check" id="b" class="checked" value="">
+      <label for="b">:checked - radio、checkbox选中</label>
+    </div>
+    <br>
+    <div>
+      <input type="text" value=":enable - 元素可用" class="able" /><br><br>
+      <input type="text" disabled="disabled" value=":disable - 元素禁用" class="able" /><br>
+    </div>
+  </div>
+  <h2>否定伪类</h2>
+  <div class="container not">
+    <p class="no">:not(选择器) - 否定</p>
+    <p class="no">no</p>
+    <p class="">yes</p>
+    <p class="">yes</p>
+    <p class="no">no</p>
+    <p class="no">no</p>
+  </div>
+  <h2>结构伪类</h2>
+  <div class="container cons">
+    <ul>
+      <li>:root</li>
+      <li>:nth-child(n)</li>
+      <li>:nth-last-child(n)</li>
+      <li>:nth-of-type(n)</li>
+      <li>:nth-last-of-type(n)</li>
+      <li>:first-child</li>
+      <li>:last-child</li>
+      <li>:first-of-type</li>
+      <li>:last-of-type</li>
+      <li>:only-child</li>
+      <li>:only-of-type</li>
+      <li>:empty</li>
+    </ul>
+  </div>
+</body>
+
+</html>
