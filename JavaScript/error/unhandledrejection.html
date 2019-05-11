@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    window.addEventListener('unhandledrejection', event => {
+      console.dir(event); // 打印"Unhandle Promise Error!"
+    });
+
+    window.addEventListener('rejectionhandled', event => {
+      console.dir(event); // 1秒后打印"rejection handled"
+    });
+
+    function foo() {
+      return Promise.reject('Unhandle Promise Error!');
+    }
+
+    var r = foo();
+
+    setTimeout(() => {
+      r.catch(e => { });
+    }, 1000);
+  </script>
+</body>
+
+</html>
