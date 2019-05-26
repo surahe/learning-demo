@@ -1,4 +1,7 @@
+// Node 并行请求
+
 let request = require('request');
+let promiseArr = []
 
 ;(async function fn() {
     for (let i = 0; i < 10; i ++) {

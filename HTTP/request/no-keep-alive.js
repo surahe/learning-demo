@@ -1,3 +1,5 @@
+// Node 串行请求（不使用keep-alive）
+
 let request = require('request');
 
 ;(async function fn() {
