@@ -105,6 +105,12 @@
 * 函子
 * ...
 
+# 多媒体
+# 视频
+* 视频本地预览
+* 播放器截图
+* canvas播放视频
+
 # Node
 ## child process
 * exec
