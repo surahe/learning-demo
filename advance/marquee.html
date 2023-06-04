@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑马灯</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            margin: 0 auto;
+            border: 2px solid;
+            overflow: hidden;
+        }
+
+        .name {
+            position: absolute;
+            top: 20px;
+            white-space: nowrap;
+        }
+
+        .qq {
+            position: absolute;
+            bottom: 20px;
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <p id="name" class="name">何俊彦</p>
+        <p id="qq" class="qq">375262986</p>
+    </div>
+    <script>
+        const container = document.getElementById("container");
+        const userName = document.getElementById('name');
+        const qq = document.getElementById('qq');
+
+        const timer = null;
+        let limitData = {};
+        const domMap = {
+            qq: qq,
+            userName: userName,
+        }
+        const division = 5;
+
+        function init() {
+            userName.style.left = container.offsetWidth + 'px';
+            qq.style.left = container.offsetWidth + 'px';
+        }
+
+        function marqueeStart() {
+            var nowTime = +new Date();
+
+            for (var key in domMap) {
+                var item = domMap[key];
+                var left = item.style.left.replace('px', '') - 4;
+
+                const lastTime = limitData[key] || 0;
+                if (lastTime) {
+                    if (nowTime < lastTime + division * 1000) {
+                        continue
+                    }
+                    limitData = {};
+                }
+
+                if (left < -container.offsetWidth) {
+                    item.style.left = container.offsetWidth + 'px';
+                    limitData[key] = nowTime;
+                } else {
+                    item.style.left = left + 'px';
+                }
+            }
+
+            this.timer = requestAnimationFrame(() => { marqueeStart(); })
+        }
+
+        init();
+        marqueeStart();
+    </script>
+</body>
+</html>
