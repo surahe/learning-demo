@@ -13,6 +13,9 @@ export const getScrollAncestor = (el) => {
     style = window.getComputedStyle(parent)
     // 如果是绝对定位，那么可滚动的祖先元素必须是有定位的才行
     if (!(isAbsolute && style.position === 'static')) {
+      // 如果还要判断overflow会导致部分情况无法滚动
+      return parent
+
       // 如果某个祖先元素的overflow属性为auto或scroll则代表是可滚动的
       if (reg.test(style.overflow + style.overflowX + style.overflowY)) {
         return parent

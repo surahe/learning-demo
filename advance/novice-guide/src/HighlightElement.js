@@ -16,17 +16,21 @@ export default class HighlightElement {
       top = 0,
       width = 0,
       height = 0
+
+    let _scrollLeft = window.scrollX || window.pageXOffset || document.documentElement.scrollLeft
+    let _scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop
+
     if (step.element) {
       const rect = step.element.getBoundingClientRect()
       let { padding } = this.app.options
-      left = rect.left + window.pageXOffset - padding
-      top = rect.top + window.pageYOffset - padding
+      left = rect.left + _scrollLeft - padding
+      top = rect.top + _scrollTop - padding
       width = rect.width + padding * 2
       height = rect.height + padding * 2
     } else {
       // 当前步骤没有元素则宽高设为0，然后窗口居中显示
-      left = window.innerWidth / 2 + window.pageXOffset
-      top = window.innerHeight / 2 + window.pageYOffset
+      left = window.innerWidth / 2 + _scrollLeft
+      top = window.innerHeight / 2 + _scrollTop
       width = 0
       height = 0
     }
