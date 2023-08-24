@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟碰撞</title>
+    <style>
+        .circle  {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            border-radius: 50%;
+            animation: 
+                colorX 26s infinite steps(10),
+                colorY 14s infinite steps(7),
+                horizontal 2.6s infinite linear alternate,
+                vertical 1.9s infinite  linear alternate;
+            animation-composition: accumulate;
+        }
+
+        @keyframes horizontal {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(100vw - 100%)); }
+        }
+        @keyframes vertical {
+            from { transform: translateY(0); }
+            to { transform: translateY(calc(100vh - 100%)); }
+        }
+
+        @keyframes colorX {
+            to {
+                filter: hue-rotate(360deg);
+            }
+        }
+        @keyframes colorY {
+            to {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="circle"></div>
+</body>
+</html>
