@@ -30,6 +30,12 @@
 * plugin的实现
 * tapable API
 
+## bigpipe
+分片加载技术
+不利于SEO，而MPA+SPA不需要SEO
+transfer-Encoding: chunked
+
+## nginx
 
 # CSS
 ## 数学
