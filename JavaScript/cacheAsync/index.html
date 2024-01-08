@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>JS前端并发多个相同的请求控制为只发一个请求方式</title>
   </head>
   <body>
     <script>
@@ -21,6 +21,7 @@
                 res: null,
                 exector: [{ resolve, reject }]
               }
+              cache.set(symbol, cacheCfg)
             } else {
               // 命中缓存
               if (cacheCfg.res) {
