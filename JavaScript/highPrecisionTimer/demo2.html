@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">requestAnimationFrame 实现</div>
+    <p><a href="https://juejin.cn/post/7187193005063798844">基于requestAnimationFrame实现高精度毫秒级正向计时器</a></p>
+    <div id="status">这里显示倒计时状态</div>
+    <button class="start">开始</button>
+
+    <br />
+
+    <script>
+        const render = (time) => {
+            document.querySelector("#status").innerHTML = Math.floor(time) / 1000;
+        };
+
+        const useCountUp = () => {
+            let rafId;
+            let endTime;
+
+            const step = (timestamp) => {
+                console.log('timestamp', timestamp);
+                render(timestamp);
+                rafId = window.requestAnimationFrame(step);
+            };
+
+            const start = () => {
+                rafId = window.requestAnimationFrame(step);
+            };
+
+            return {
+                start,
+            };
+        };
+
+        const { start } = useCountUp();
+
+        document.querySelector('.start').addEventListener('click', () => {
+            start();
+        });
+    </script>
+</body>
+
+</html>
