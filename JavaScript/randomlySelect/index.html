@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按权重随机选择</title>
+</head>
+<body>
+    <a href="https://leetcode.cn/problems/random-pick-with-weight/description/">参考</a>
+
+    <script src="./index.js"></script>
+    <script>
+        var solution = new Solution([{
+            value: 'a',
+            chance: 0.01
+        }, {
+            value: 'b',
+            chance: 0.8
+        }, {
+            value: 'c',
+            chance: 0.14,
+        }, {
+            value: 'd',
+            chance: 0.05,
+        }])
+
+        let map = {}
+
+        for(let t = 0; t < 10000; t++) {
+            let so = solution.pickValue();
+
+            if (!map[so]) {
+                map[so] = 1;
+            } else {
+                map[so] = map[so] + 1;
+            }
+        }
+
+        console.log(map)
+    </script>
+</body>
+</html>
