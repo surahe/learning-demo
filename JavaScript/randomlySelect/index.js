@@ -50,7 +50,7 @@ var Solution = function (list) {
     this.preSum = new Array(n + 1);
     this.preSum[0] = 0;
     for (let i = 1; i <= n; i++) {
-        this.preSum[i] = this.preSum[i - 1] + this.formatList[i - 1].chance * 100;
+        this.preSum[i] = formatNumber(this.preSum[i - 1] + this.formatList[i - 1].chance * 100);
     }
 };
 
