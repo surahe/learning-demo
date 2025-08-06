@@ -1,0 +1,157 @@
+<view class="live-broadcast-page {{horizontal ? 'horizontal' : 'vertical'}}" bind:tap="showControl">
+    <view class="screen-layer {{screenPlayerList.length > 0 ? 'camera-screen-layout' : 'camera-layout'}}">
+
+        <view class="camera-list num-{{cameraPlayerList.length + 1}}">
+            <view wx:for="{{cameraPlayerList}}" wx:key="id" class="screen-item">
+                <view class="player-container">
+                    <live-player
+                        class="player"
+                        id="{{item.id}}"
+                        data-userid="{{item.userID}}"
+                        data-streamid="{{item.streamID}}"
+                        data-streamtype="{{item.streamType}}"
+                        src= "{{item.src}}"
+                        mode= "RTC"
+                        autoplay= "{{item.autoplay}}"
+                        mute-audio= "{{item.muteAudio}}"
+                        mute-video= "{{item.muteVideo}}"
+                        orientation= "{{item.orientation}}"
+                        object-fit= "{{item.objectFit}}"
+                        background-mute= "{{item.enableBackgroundMute}}"
+                        min-cache= "{{item.minCache}}"
+                        max-cache= "{{item.maxCache}}"
+                        sound-mode= "{{item.soundMode}}"
+                        enable-recv-message= "{{item.enableRecvMessage}}"
+                        auto-pause-if-navigate= "{{item.autoPauseIfNavigate}}"
+                        auto-pause-if-open-native= "{{item.autoPauseIfOpenNative}}"
+                    />
+                </view>
+                <view class="player-desc">
+                    <view class="icon-mic {{item.muteAudio ? 'close' : 'open'}}"></view>
+                    <view class="name">{{userMap[item.qlUserId] && userMap[item.qlUserId].name || ''}}</view>
+                    <view class="tag {{item.qlStreamRole}}">{{item.qlStreamRole === 'Anchor' ? '主持人' : '嘉宾'}}</view>
+                </view>
+            </view>
+    
+            <view class="screen-item">
+                <view class="player-container">
+                    <live-pusher
+                        class="player"
+                        wx:if="{{pusher}}"
+                        url="{{pusher.url}}"
+                        mode="{{pusher.mode}}"
+                        autopush="{{pusher.autopush}}"
+                        enable-camera="{{pusher.enableCamera}}"
+                        enable-mic="{{pusher.enableMic}}"
+                        muted="{{!pusher.enableMic}}"
+                        enable-agc="{{pusher.enableAgc}}"
+                        enable-ans="{{pusher.enableAns}}"
+                        enable-ear-monitor="{{pusher.enableEarMonitor}}"
+                        auto-focus="{{pusher.enableAutoFocus}}"
+                        zoom="{{pusher.enableZoom}}"
+                        min-bitrate="{{pusher.minBitrate}}"
+                        max-bitrate="{{pusher.maxBitrate}}"
+                        video-width="{{pusher.videoWidth}}"
+                        video-height="{{pusher.videoHeight}}"
+                        beauty="{{pusher.beautyLevel}}"
+                        whiteness="{{pusher.whitenessLevel}}"
+                        orientation="{{pusher.videoOrientation}}"
+                        aspect="{{pusher.videoAspect}}"
+                        device-position="{{pusher.frontCamera}}"
+                        remote-mirror="{{pusher.enableRemoteMirror}}"
+                        local-mirror="{{pusher.localMirror}}"
+                        background-mute="{{pusher.enableBackgroundMute}}"
+                        audio-quality="{{pusher.audioQuality}}"
+                        audio-volume-type="{{pusher.audioVolumeType}}"
+                        audio-reverb-type="{{pusher.audioReverbType}}"
+                        waiting-image="{{pusher.waitingImage}}"
+                        beauty-style="{{pusher.beautyStyle}}"
+                        filter="{{pusher.filter}}"
+                        bindstatechange="_pusherStateChangeHandler"
+                        bindnetstatus="_pusherNetStatusHandler"
+                        binderror="_pusherErrorHandler"
+                        bindbgmstart="_pusherBGMStartHandler"
+                        bindbgmprogress="_pusherBGMProgressHandler"
+                        bindbgmcomplete="_pusherBGMCompleteHandler"
+                        bindaudiovolumenotify="_pusherAudioVolumeNotify"
+                    />
+                </view>
+                <view class="player-desc" wx:if="{{userInfo}}">
+                    <view class="icon-mic {{pusher.enableMic ? 'open' : 'close'}}"></view>
+                    <view class="name">{{userInfo.name}}</view>
+                    <view class="tag me">我</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="screen-list">
+            <view wx:for="{{screenPlayerList}}" wx:key="id" class="screen-item">
+                <view class="player-container">
+                    <live-player
+                        class="player"
+                        id="{{item.id}}"
+                        data-userid="{{item.userID}}"
+                        data-streamid="{{item.streamID}}"
+                        data-streamtype="{{item.streamType}}"
+                        src= "{{item.src}}"
+                        mode= "RTC"
+                        autoplay= "{{item.autoplay}}"
+                        mute-audio= "{{item.muteAudio}}"
+                        mute-video= "{{item.muteVideo}}"
+                        orientation= "{{item.orientation}}"
+                        object-fit= "{{item.objectFit}}"
+                        background-mute= "{{item.enableBackgroundMute}}"
+                        min-cache= "{{item.minCache}}"
+                        max-cache= "{{item.maxCache}}"
+                        sound-mode= "{{item.soundMode}}"
+                        enable-recv-message= "{{item.enableRecvMessage}}"
+                        auto-pause-if-navigate= "{{item.autoPauseIfNavigate}}"
+                        auto-pause-if-open-native= "{{item.autoPauseIfOpenNative}}"
+                    />
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <view class="info-layer" wx:if="{{showLiveInfo && topicInfo}}" style="top: {{navTop}}px">
+        <view class="live-logo">
+            <image src="{{topicInfo.liveLogo}}"></image>
+        </view>
+        <view class="live-info">
+            <view class="live-title">{{topicInfo.liveName}}</view>
+            <view class="live-online"><text>直播中</text><text>|</text><text>人次：{{onlineNum || topicInfo.browseNum}}</text></view>
+        </view>
+    </view>
+
+    <view class="control-layer" wx:if="{{showControl}}">
+        <view class="control-items">
+            <view class="control-item" bind:tap="toggleCamera">
+                <image wx:if="{{openCamera}}" src="https://img.qlchat.com/qlLive/activity/image/XAGWCJLQ-QPIL-V66Z-1743065240733-P5YO2SJ12ZQH.png"></image>
+                <image wx:else src="https://img.qlchat.com/qlLive/activity/image/OZG6HONY-KAJ3-FPP2-1743065238843-IA5SZ2CDLFRN.png"></image>
+                <view>摄像头</view>
+            </view>
+            <view class="control-item{{!openCamera ? ' disable' : ''}}" bind:tap="toggleFrontCamera">
+                <image src="https://img.qlchat.com/qlLive/activity/image/FZ1CEDMG-DK2W-1LES-1743065221438-4LSZ1CTGOY4Q.png"></image>
+                <view>翻转</view>
+            </view>
+            <!-- <view class="control-item" bind:tap="toggleMic">
+                <image wx:if="{{openMic}}" src="https://img.qlchat.com/qlLive/activity/image/8GLN9YX4-DMFW-9T2D-1743065228103-OGD4UGRDAH37.png"></image>
+                <image wx:else src="https://img.qlchat.com/qlLive/activity/image/ABAAA7JY-Z3D2-2ACB-1743065225696-XSRV7FAV512J.png"></image>
+                <view>麦克风</view>
+            </view> -->
+            <view wx:if="{{horizontal}}" class="control-item" bind:tap="toggleDirection">
+                <image src="https://img.qlchat.com/qlLive/activity/image/NSBVID4W-D1PO-YRYJ-1743065236678-ZWI2BM9RCKXF.png"></image>
+                <view>切换竖屏</view>
+            </view>
+            <view wx:else class="control-item" bind:tap="toggleDirection">
+                <image src="https://img.qlchat.com/qlLive/activity/image/NF1S8TXP-V4FQ-41WI-1743065206751-KCAFURF5YKNE.png"></image>
+                <view>切换横屏</view>
+            </view>
+            <view class="control-item" bind:tap="handleExit">
+                <image src="https://img.qlchat.com/qlLive/activity/image/BV2DGUF3-5SY2-823R-1743065223605-GFXHSCK98AN7.png"></image>
+                <view>挂断</view>
+            </view>
+        </view>
+    </view>
+</view>
