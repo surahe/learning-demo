@@ -14,13 +14,32 @@ const BufferConfig = {
         limit: 1,
         threshold: 15 * 1000, // ms
     },
+    'new-user-enter': {
+        type: 'burst',
+        limit: 100,
+        threshold: 1 * 1000, // ms
+    },
     'topicOnlineUser': {
-        limit: 0,
-        threshold: 15 * 1000
+        limit: 100,
+        threshold: 1 * 1000
+    },
+    'comment': {
+        type: 'burst',
+        limit: 100,
+        threshold: 1 * 1000,
+    },
+    'deleteComment': {
+        type: 'burst',
+        limit: 100,
+        threshold: 1 * 1000,
+    },
+    'speak': {
+        limit: 100,
+        threshold: 1 * 1000,
     },
     'liveMicrophone' : {
         limit: 100,
-        threshold: 5 * 1000,
+        threshold: 3 * 1000,
     },
     'audienceMsg': {
         limit: 1,
@@ -166,10 +185,9 @@ class QlSocketHandle {
         };
     
         socket.onmessage = (event) => {
-            console.log('socket onmessage')
-    
+            
             const message = JSON.parse(event.data);
-    
+            console.log('socket onmessage',message)
             if (message.status == 200) {
                 this.reTry = 0;
                 this.messageHandle(message);
@@ -208,7 +226,12 @@ class QlSocketHandle {
                 if (this.pushType !== 'HTTP') {
                     this.prevTime = _item.dateStr;
                 }
-
+                console.log('socket onmessage',_item.pushExp, _item)
+                if(_item.pushExp === 'topicOnlineUser' && _item.enter === 'Y'){
+                    this.bufferPush('new-user-enter', {
+                        userInfor: _item
+                    })
+                }
                 this.bufferPush(_item.pushExp, _item);
             });
         }

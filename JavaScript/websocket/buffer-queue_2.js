@@ -73,13 +73,6 @@ class BufferQueue {
         this.timer = requestAnimationFrame(this.doTimer.bind(this)); // 不使用timeout定时器 降低执行层级
     }
 
-    clearTimer () {
-        if (this.timer) {
-            cancelAnimationFrame(this.timer);
-            this.timer = undefined;
-        }
-    }
-
     /**
      * 注册缓存队列
      * @param {*} key 缓存key
